@@ -33,30 +33,19 @@ when "Psiidium"
   end
 end
 
-
-#GBF-Gabriel
-#'myYVTEQG00UCHslybO5qxY8QP'
-#'UTG1m77NWaS2EijN4KKjBvmW7kTq7x8n4H2EcFS5X2lLSOUqq5'
-#'1064877108-a3DEIJzZ6BgkOQemSU9u1HZHqkSMiDDJ8slSqt4'
-#'S4xPqH3VA1lL64GL6uNNwglAUII1eB1f9tJsRN7fFuPMH'
-##psiidium
-#'w95t1CmkoaDfLrWUbXjqgg'
-#'jI2UCpZZw6Pm1Qgqozr176Vh44dKCIpfWUQOnRwkiQ'
-#'143255657-tkF3sloYreEw7rPkVJpTed7kzHAQZAc4IwmfbFSW'
-#'hxzSKECZH7WcqOLdzaaOnR4UPuY6SJreFjcJpbFklGNuT'
-filename = "./keywords.json"
+@filename = "./keywords.json"
 begin
-  fileKey = File.open(filename, "r+")
+  fileKey = File.open(@filename, "r+")
   @keywords = JSON.parse(fileKey.read) #keeps in memory and uses disk for backup only
   fileKey.close
 rescue
-  fileKey = File.new(filename, "w+")
+  fileKey = File.new(@filename, "w+")
   fileKey.close
   @keywords = Hash.new { |hash, key| hash[key] = [] }
 end
 
 def refresh_keyword_file
-  fileKey = File.open(filename, "r+")
+  fileKey = File.open(@filename, "r+")
   fileKey.rewind
   fileKey.write(@keywords.to_json)
   fileKey.close
@@ -103,7 +92,7 @@ def incomingCommand dm
   when /^(monitore )/i
     puts 'identificado monitore'
     new_word = dm.text[9..-1]
-    @keywords[sender_name].push(new_keyword)
+    @keywords[dm.sender.screen_name].push(new_word)
     refresh_keyword_file
     reply = "#{new_word} adicionado"
   when /^(delete )/i
@@ -148,7 +137,7 @@ end
 streaming.user do |object|
   case object
   when Twitter::Tweet
-    if 'hardmob_promo' == object.user.screen_name
+    if 'Psiidium' == object.user.screen_name
       puts "conta monitorada tweetou"
       newHardmob object
     end
