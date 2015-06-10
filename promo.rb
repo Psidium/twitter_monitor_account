@@ -1,4 +1,5 @@
 require 'twitter'
+require 'json'
 
 @client = Twitter::REST::Client.new do |config|
   config.consumer_key        = 'w95t1CmkoaDfLrWUbXjqgg'
@@ -25,9 +26,23 @@ end
 #'jI2UCpZZw6Pm1Qgqozr176Vh44dKCIpfWUQOnRwkiQ'
 #'143255657-tkF3sloYreEw7rPkVJpTed7kzHAQZAc4IwmfbFSW'
 #'hxzSKECZH7WcqOLdzaaOnR4UPuY6SJreFjcJpbFklGNuT'
+filename = "./keywords.json"
+begin
+  fileKey = File.open(filename, "r+")
+  @keywords = JSON.parse(fileKey.read) #keeps in memory and uses disk for backup only
+  fileKey.close
+rescue
+  fileKey = File.new(filename, "w+")
+  fileKey.close
+  @keywords = Hash.new { |hash, key| hash[key] = [] }
+end
 
-@keywords = Hash.new { |hash, key| hash[key] = [] }
-# salvar isso num arquivo e sempre abrir assim que o programa fechar
+def refresh_keyword_file
+  fileKey = File.open(filename, "r+")
+  fileKey.rewind
+  fileKey.write(@keywords.to_json)
+  fileKey.close
+end
 
 def newHardmob tweet
   hardmob_text = tweet.full_text
@@ -70,13 +85,15 @@ def incomingCommand dm
   when /^(monitore )/i
     puts 'identificado monitore'
     new_word = dm.text[9..-1]
-    @keywords[dm.sender.screen_name].push(new_word)
+    @keywords[sender_name].push(new_keyword)
+    refresh_keyword_file
     reply = "#{new_word} adicionado"
   when /^(delete )/i
     puts 'identificado delete'
     old_word = dm.text[7..-1]
     if @keywords[dm.sender.screen_name].include? old_word
       @keywords[dm.sender.screen_name] -= [old_word]
+      refresh_keyword_file
       reply = "#{old_word} removido com sucesso"
     else
       reply = "#{old_word} nao foi encontrado"
@@ -102,11 +119,14 @@ def incomingCommand dm
     returnDmAlways(dm.sender.screen_name, reply)
   end
 end
+
+
 begin
   screen_name_meu = @client.user.screen_name
 rescue
   screen_name_meu = 'Psiidium' #por favor SÓ NO DEBUG O MERDA
 end
+
 streaming.user do |object|
   case object
   when Twitter::Tweet
