@@ -1,18 +1,36 @@
 require 'twitter'
 require 'json'
 
-@client = Twitter::REST::Client.new do |config|
-  config.consumer_key        = 'w95t1CmkoaDfLrWUbXjqgg'
-  config.consumer_secret     = 'jI2UCpZZw6Pm1Qgqozr176Vh44dKCIpfWUQOnRwkiQ'
-  config.access_token        = '143255657-tkF3sloYreEw7rPkVJpTed7kzHAQZAc4IwmfbFSW'
-  config.access_token_secret = 'hxzSKECZH7WcqOLdzaaOnR4UPuY6SJreFjcJpbFklGNuT'
-end
+bot_name = "GBF_Gabriel"
+case bot_name
+when "GBF_Gabriel"
+  @client = Twitter::REST::Client.new do |config|
+    config.consumer_key        = 'myYVTEQG00UCHslybO5qxY8QP'
+    config.consumer_secret     = 'UTG1m77NWaS2EijN4KKjBvmW7kTq7x8n4H2EcFS5X2lLSOUqq5'
+    config.access_token        = '1064877108-a3DEIJzZ6BgkOQemSU9u1HZHqkSMiDDJ8slSqt4'
+    config.access_token_secret = 'S4xPqH3VA1lL64GL6uNNwglAUII1eB1f9tJsRN7fFuPMH'
+  end
 
-streaming = Twitter::Streaming::Client.new do |config|
-  config.consumer_key        = 'w95t1CmkoaDfLrWUbXjqgg'
-  config.consumer_secret     = 'jI2UCpZZw6Pm1Qgqozr176Vh44dKCIpfWUQOnRwkiQ'
-  config.access_token        = '143255657-tkF3sloYreEw7rPkVJpTed7kzHAQZAc4IwmfbFSW'
-  config.access_token_secret = 'hxzSKECZH7WcqOLdzaaOnR4UPuY6SJreFjcJpbFklGNuT'
+  streaming = Twitter::Streaming::Client.new do |config|
+    config.consumer_key        = 'myYVTEQG00UCHslybO5qxY8QP'
+    config.consumer_secret     = 'UTG1m77NWaS2EijN4KKjBvmW7kTq7x8n4H2EcFS5X2lLSOUqq5'
+    config.access_token        = '1064877108-a3DEIJzZ6BgkOQemSU9u1HZHqkSMiDDJ8slSqt4'
+    config.access_token_secret = 'S4xPqH3VA1lL64GL6uNNwglAUII1eB1f9tJsRN7fFuPMH'
+  end
+when "Psiidium"
+  @client = Twitter::REST::Client.new do |config|
+    config.consumer_key        = 'w95t1CmkoaDfLrWUbXjqgg'
+    config.consumer_secret     = 'jI2UCpZZw6Pm1Qgqozr176Vh44dKCIpfWUQOnRwkiQ'
+    config.access_token        = '143255657-tkF3sloYreEw7rPkVJpTed7kzHAQZAc4IwmfbFSW'
+    config.access_token_secret = 'hxzSKECZH7WcqOLdzaaOnR4UPuY6SJreFjcJpbFklGNuT'
+  end
+
+  streaming = Twitter::Streaming::Client.new do |config|
+    config.consumer_key        = 'w95t1CmkoaDfLrWUbXjqgg'
+    config.consumer_secret     = 'jI2UCpZZw6Pm1Qgqozr176Vh44dKCIpfWUQOnRwkiQ'
+    config.access_token        = '143255657-tkF3sloYreEw7rPkVJpTed7kzHAQZAc4IwmfbFSW'
+    config.access_token_secret = 'hxzSKECZH7WcqOLdzaaOnR4UPuY6SJreFjcJpbFklGNuT'
+  end
 end
 
 
