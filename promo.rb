@@ -1,11 +1,16 @@
 require 'twitter'
 require 'json'
 
+if !ARGV[0]
+  puts 'Usage: ruby promo.rb [account_to_monitor]'
+  exit
+end
+
 bot_name = "GBF_Gabriel"
 case bot_name
 when "GBF_Gabriel"
   @client = Twitter::REST::Client.new do |config|
-    config.consumer_key        = 'myYVTEQG00UCHslybO5qxY8QP'
+    config.consumer_key        = 'myYVTEQG00UCHslybO5qxY8QP' #I've just revoked thoose, use your own twitter profile
     config.consumer_secret     = 'UTG1m77NWaS2EijN4KKjBvmW7kTq7x8n4H2EcFS5X2lLSOUqq5'
     config.access_token        = '1064877108-a3DEIJzZ6BgkOQemSU9u1HZHqkSMiDDJ8slSqt4'
     config.access_token_secret = 'S4xPqH3VA1lL64GL6uNNwglAUII1eB1f9tJsRN7fFuPMH'
@@ -137,7 +142,7 @@ end
 streaming.user do |object|
   case object
   when Twitter::Tweet
-    if 'Psiidium' == object.user.screen_name
+    if ARGV[0] == object.user.screen_name
       puts "conta monitorada tweetou"
       newHardmob object
     end
