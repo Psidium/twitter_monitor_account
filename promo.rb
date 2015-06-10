@@ -2,7 +2,8 @@ require 'twitter'
 require 'json'
 
 if !ARGV[0]
-  puts 'Usage: ruby promo.rb [account_to_monitor]'
+  puts 'Usage: ruby promo.rb account_to_monitor'
+  puts 'withOUT the @, only the nick'
   exit
 end
 
